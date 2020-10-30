@@ -1,0 +1,8 @@
+.DS_Store
+.idea/
+gin-bin
+app
+coverage.out
+.env
+air
+tmp/
