@@ -61,7 +61,7 @@ func (hook *GoHook) Send(receiverURL string) (*http.Response, error) {
 
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Charset", "utf-8")
-	req.Header.Add("Signature", hook.ResultingSha)
+	req.Header.Add(SignatureHeader, hook.ResultingSha)
 	resp, err := client.Do(req)
 
 	if err != nil {
