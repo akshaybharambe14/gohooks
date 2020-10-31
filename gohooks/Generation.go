@@ -14,9 +14,11 @@ import (
 
 // GoHook represents the definition of a GoHook.
 type GoHook struct {
-	Payload      GoHookPayload
-	ResultingSha string
-	PreparedData []byte
+	Payload         GoHookPayload
+	ResultingSha    string
+	PreparedData    []byte
+	SignatureHeader string
+	Secure          bool
 }
 
 type GoHookPayload struct {
@@ -49,7 +51,14 @@ func (hook *GoHook) Create(data interface{}, resource, secret string) {
 
 // Send sends a GoHook to the specified URL.
 func (hook *GoHook) Send(receiverURL string) (*http.Response, error) {
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true} //nolint:gosec
+	if hook.SignatureHeader == "" {
+		hook.SignatureHeader = DefaultSignatureHeader
+	}
+
+	if !hook.Secure {
+		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true} //nolint:gosec
+	}
+
 	client := &http.Client{}
 	ctx := context.Background()
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, receiverURL, bytes.NewBuffer(hook.PreparedData))
@@ -61,7 +70,7 @@ func (hook *GoHook) Send(receiverURL string) (*http.Response, error) {
 
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Charset", "utf-8")
-	req.Header.Add(SignatureHeader, hook.ResultingSha)
+	req.Header.Add(DefaultSignatureHeader, hook.ResultingSha)
 	resp, err := client.Do(req)
 
 	if err != nil {

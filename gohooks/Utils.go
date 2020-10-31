@@ -1,5 +1,5 @@
 package gohooks
 
 const (
-	SignatureHeader = "X-GoHooks-Verification"
+	DefaultSignatureHeader = "X-GoHooks-Verification"
 )
