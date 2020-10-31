@@ -9,7 +9,7 @@ import (
 )
 
 // isGoHookValid checks the sha256 of the data matches the one given on the signature.
-func isGoHookValid(data interface{}, signature, secret string) bool {
+func IsGoHookValid(data interface{}, signature, secret string) bool {
 	h := hmac.New(sha256.New, []byte(secret))
 	preparedData, _ := json.Marshal(data)
 
