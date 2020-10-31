@@ -12,6 +12,10 @@ import (
 )
 ```
 
+## Documentation
+
+[Visit the documentation on pkg.go.dev](https://pkg.go.dev/github.com/averageflow/gohooks/gohooks)
+
 ## Usage
 
 Here I will list the most basic usage for the GoHooks. If you desire more customization please read the section below for more options.
