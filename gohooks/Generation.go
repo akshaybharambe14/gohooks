@@ -83,7 +83,7 @@ func (hook *GoHook) Send(receiverURL string) (*http.Response, error) {
 	ctx := context.Background()
 	req, err := http.NewRequestWithContext(
 		ctx,
-		http.MethodPost,
+		hook.PreferredMethod,
 		receiverURL,
 		bytes.NewBuffer(hook.PreparedData),
 	)
