@@ -14,13 +14,23 @@ import (
 
 // GoHook represents the definition of a GoHook.
 type GoHook struct {
-	Payload         GoHookPayload
-	ResultingSha    string
-	PreparedData    []byte
+	// Data to be sent in the GoHook
+	Payload GoHookPayload
+	// The encrypted SHA resulting with the used salt
+	ResultingSha string
+	// Prepared JSON marshalled data
+	PreparedData []byte
+	// Choice of signature header to use on sending a GoHook
 	SignatureHeader string
-	Secure          bool
+	// Should validate SSL certificate
+	IsSecure bool
+	// Preferred HTTP method to send the GoHook
+	// Please choose only POST, DELETE, PATCH or PUT
+	// Any other value will make the send use POST as fallback
+	PreferredMethod string
 }
 
+// GoHookPayload represents the data that will be sent in the GoHook
 type GoHookPayload struct {
 	Resource string      `json:"resource"`
 	Data     interface{} `json:"data"`
@@ -52,16 +62,31 @@ func (hook *GoHook) Create(data interface{}, resource, secret string) {
 // Send sends a GoHook to the specified URL.
 func (hook *GoHook) Send(receiverURL string) (*http.Response, error) {
 	if hook.SignatureHeader == "" {
+		// Use the DefaultSignatureHeader as default if no custom header is specified
 		hook.SignatureHeader = DefaultSignatureHeader
 	}
 
-	if !hook.Secure {
+	if !hook.IsSecure {
+		// By default do not verify SSL certificate validity
 		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true} //nolint:gosec
+	}
+
+	if hook.PreferredMethod == "" || (hook.PreferredMethod != http.MethodPost &&
+		hook.PreferredMethod != http.MethodPatch &&
+		hook.PreferredMethod != http.MethodPut &&
+		hook.PreferredMethod != http.MethodDelete) {
+		// By default send GoHook using a POST method
+		hook.PreferredMethod = http.MethodPost
 	}
 
 	client := &http.Client{}
 	ctx := context.Background()
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, receiverURL, bytes.NewBuffer(hook.PreparedData))
+	req, err := http.NewRequestWithContext(
+		ctx,
+		http.MethodPost,
+		receiverURL,
+		bytes.NewBuffer(hook.PreparedData),
+	)
 
 	if err != nil {
 		log.Println(err.Error())
