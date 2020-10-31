@@ -18,7 +18,7 @@ type GoHook struct {
 	Payload GoHookPayload
 	// The encrypted SHA resulting with the used salt
 	ResultingSha string
-	// Prepared JSON marshalled data
+	// Prepared JSON marshaled data
 	PreparedData []byte
 	// Choice of signature header to use on sending a GoHook
 	SignatureHeader string
@@ -30,7 +30,7 @@ type GoHook struct {
 	PreferredMethod string
 }
 
-// GoHookPayload represents the data that will be sent in the GoHook
+// GoHookPayload represents the data that will be sent in the GoHook.
 type GoHookPayload struct {
 	Resource string      `json:"resource"`
 	Data     interface{} `json:"data"`
@@ -41,7 +41,7 @@ func (hook *GoHook) Create(data interface{}, resource, secret string) {
 	hook.Payload.Resource = resource
 	hook.Payload.Data = data
 
-	preparedHookData, err := json.Marshal(hook.Payload.Data)
+	preparedHookData, err := json.Marshal(hook.Payload)
 	if err != nil {
 		log.Println(err.Error())
 	}
