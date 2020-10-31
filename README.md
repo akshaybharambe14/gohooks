@@ -56,7 +56,7 @@ saltSecret := "0014716e-392c-4120-609e-555e295faff5"
 receivedSignature := c.GetHeader(gohooks.DefaultSignatureHeader)
 
 // Verify validity of GoHook
-isValid := gohooks.IsGoHookValid(requestBody, receivedSignature, saltSecret)
+isValid := gohooks.IsGoHookValid(request, receivedSignature, saltSecret)
 // Decide what to do if GoHook is valid or not.
 ```
 
