@@ -4,7 +4,13 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/fa3f27e42986b329c2b2/maintainability)](https://codeclimate.com/github/averageflow/gohooks/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/fa3f27e42986b329c2b2/test_coverage)](https://codeclimate.com/github/averageflow/gohooks/test_coverage)
 
-GoHooks make it easy to send and consume secured web-hooks from a Go application.
+GoHooks make it easy to send and consume secured web-hooks from a Go application. A SHA-256 signature is created with the sent data plus an encryption salt and serves to validate on receiving, effectively making your applications only accept communication from a trusted party.
+
+## Code Insights
+
+- [GoReportCard](https://goreportcard.com/report/github.com/averageflow/gohooks)
+- [Documentation on pkg.go.dev](https://pkg.go.dev/github.com/averageflow/gohooks/gohooks)
+
 
 ## Installation
 
@@ -16,9 +22,6 @@ import (
 )
 ```
 
-## Documentation
-
-[Documentation on pkg.go.dev](https://pkg.go.dev/github.com/averageflow/gohooks/gohooks)
 
 ## Usage
 
