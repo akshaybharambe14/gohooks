@@ -16,7 +16,7 @@ matrix:
         - chmod +x ./cc-test-reporter
         - ./cc-test-reporter before-build
       script:
-        - go test -json -v github.com/averageflow/gohooks/tests/... -coverpkg=github.com/averageflow/gohooks/... -coverprofile=coverage.out ./... ./...
+        - go test -json -v github.com/averageflow/gohooks/tests/... -coverpkg=github.com/averageflow/gohooks/... -coverprofile=c.out ./... ./...
       after_script:
         - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
@@ -33,6 +33,6 @@ matrix:
         - chmod +x ./cc-test-reporter
         - ./cc-test-reporter before-build
       script:
-        - go test -json -v github.com/averageflow/gohooks/tests/... -coverpkg=github.com/averageflow/gohooks/... -coverprofile=coverage.out ./... ./...
+        - go test -json -v github.com/averageflow/gohooks/tests/... -coverpkg=github.com/averageflow/gohooks/... -coverprofile=c.out ./... ./...
       after_script:
         - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
