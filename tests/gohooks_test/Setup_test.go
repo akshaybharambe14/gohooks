@@ -33,7 +33,7 @@ type NewBinResponse struct {
 }
 
 func CreateRequestBin() string {
-	resp, err := http.Post(
+	resp, err := http.Post( //nolint:noctx
 		"https://postb.in/api/bin",
 		"",
 		nil,

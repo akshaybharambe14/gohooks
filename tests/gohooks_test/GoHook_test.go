@@ -14,19 +14,41 @@ func TestSend(t *testing.T) {
 	hook := &gohooks.GoHook{}
 	hook.Create(data, "int-resource", secret)
 
-	_, _ = hook.Send(RequestBinURL)
+	resp, _ := hook.Send(RequestBinURL)
+	if resp != nil {
+		defer resp.Body.Close()
+	}
 
 	hook.PreferredMethod = http.MethodPatch
-	_, _ = hook.Send(RequestBinURL)
+
+	resp, _ = hook.Send(RequestBinURL)
+	if resp != nil {
+		defer resp.Body.Close()
+	}
 
 	hook.PreferredMethod = http.MethodPut
-	_, _ = hook.Send(RequestBinURL)
+
+	resp, _ = hook.Send(RequestBinURL)
+	if resp != nil {
+		defer resp.Body.Close()
+	}
 
 	hook.PreferredMethod = http.MethodDelete
-	_, _ = hook.Send(RequestBinURL)
+
+	resp, _ = hook.Send(RequestBinURL)
+	if resp != nil {
+		defer resp.Body.Close()
+	}
 
 	hook.PreferredMethod = "invalid"
-	_, _ = hook.Send(RequestBinURL)
 
-	_, _ = hook.Send("")
+	resp, _ = hook.Send(RequestBinURL)
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+
+	resp, _ = hook.Send("")
+	if resp != nil {
+		defer resp.Body.Close()
+	}
 }
