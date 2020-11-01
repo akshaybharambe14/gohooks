@@ -14,7 +14,7 @@ import (
 
 ## Documentation
 
-[Visit the documentation on pkg.go.dev](https://pkg.go.dev/github.com/averageflow/gohooks/gohooks)
+[Documentation on pkg.go.dev](https://pkg.go.dev/github.com/averageflow/gohooks/gohooks)
 
 ## Usage
 

@@ -12,6 +12,10 @@ import (
 	"net/http"
 )
 
+const (
+	DefaultSignatureHeader = "X-GoHooks-Verification"
+)
+
 // GoHook represents the definition of a GoHook.
 type GoHook struct {
 	// Data to be sent in the GoHook
@@ -59,7 +63,7 @@ func (hook *GoHook) Create(data interface{}, resource, secret string) {
 	hook.ResultingSha = hex.EncodeToString(h.Sum(nil))
 }
 
-// Send sends a GoHook to the specified URL.
+// Send sends a GoHook to the specified URL, as a UTF-8 JSON payload.
 func (hook *GoHook) Send(receiverURL string) (*http.Response, error) {
 	if hook.SignatureHeader == "" {
 		// Use the DefaultSignatureHeader as default if no custom header is specified

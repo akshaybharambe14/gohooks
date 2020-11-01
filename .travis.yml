@@ -1,0 +1,13 @@
+matrix:
+  include:
+    - language: go
+      go:
+        - 1.15.x
+        - master
+      os:
+        - linux
+        - osx
+      sudo: false
+      install: true
+      script:
+        - go test -json -v github.com/averageflow/gohooks/tests/... -coverpkg=github.com/averageflow/gohooks/... -coverprofile=coverage.out ./... ./...

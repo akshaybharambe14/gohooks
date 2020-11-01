@@ -16,6 +16,7 @@ func IsGoHookValid(data interface{}, signature, secret string) bool {
 	_, err := h.Write(preparedData)
 	if err != nil {
 		log.Println(err.Error())
+		return false
 	}
 
 	sha := hex.EncodeToString(h.Sum(nil))
