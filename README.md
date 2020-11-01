@@ -1,5 +1,9 @@
 # GoHooks
 
+[![Build Status](https://travis-ci.com/averageflow/gohooks.svg?branch=master)](https://travis-ci.com/averageflow/gohooks)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fa3f27e42986b329c2b2/maintainability)](https://codeclimate.com/github/averageflow/gohooks/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/fa3f27e42986b329c2b2/test_coverage)](https://codeclimate.com/github/averageflow/gohooks/test_coverage)
+
 GoHooks make it easy to send and consume secured web-hooks from a Go application.
 
 ## Installation

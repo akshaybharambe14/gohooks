@@ -1,3 +1,6 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=64bca50fbe9c734893daea6c98af1199c1de5d40e3550e950b0bfabc80a9ffcc
 matrix:
   include:
     - language: go
@@ -6,8 +9,30 @@ matrix:
         - master
       os:
         - linux
+      sudo: false
+      install: true
+      before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
+      script:
+        - go test -json -v github.com/averageflow/gohooks/tests/... -coverpkg=github.com/averageflow/gohooks/... -coverprofile=coverage.out ./... ./...
+      after_script:
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+    - language: go
+      go:
+        - 1.15.x
+        - master
+      os:
         - osx
       sudo: false
       install: true
+      before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
       script:
         - go test -json -v github.com/averageflow/gohooks/tests/... -coverpkg=github.com/averageflow/gohooks/... -coverprofile=coverage.out ./... ./...
+      after_script:
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
