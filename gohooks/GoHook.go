@@ -79,6 +79,7 @@ func (hook *GoHook) Send(receiverURL string) (*http.Response, error) {
 	case http.MethodPost, http.MethodPatch, http.MethodPut, http.MethodDelete:
 		// Valid Methods, Do nothing
 	default:
+		// By default send GoHook using a POST method
 		hook.PreferredMethod = http.MethodPost
 	}
 
