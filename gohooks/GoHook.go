@@ -75,11 +75,10 @@ func (hook *GoHook) Send(receiverURL string) (*http.Response, error) {
 		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true} //nolint:gosec
 	}
 
-	if hook.PreferredMethod == "" || (hook.PreferredMethod != http.MethodPost &&
-		hook.PreferredMethod != http.MethodPatch &&
-		hook.PreferredMethod != http.MethodPut &&
-		hook.PreferredMethod != http.MethodDelete) {
-		// By default send GoHook using a POST method
+	switch hook.PreferredMethod {
+	case http.MethodPost, http.MethodPatch, http.MethodPut, http.MethodDelete:
+		// Valid Methods, Do nothing
+	default:
 		hook.PreferredMethod = http.MethodPost
 	}
 
